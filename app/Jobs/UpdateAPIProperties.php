@@ -8,7 +8,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 
 class UpdateAPIProperties implements ShouldQueue
 {
@@ -17,16 +16,16 @@ class UpdateAPIProperties implements ShouldQueue
     /**
      * @var array
      */
-    private $properties;
+    private $newProperties;
 
     /**
      * Create a new job instance.
      *
-     * @param  Collection  $properties
+     * @param  array  $properties
      */
-    public function __construct(Collection $properties)
+    public function __construct(array $properties)
     {
-        $this->properties = $properties;
+        $this->newProperties = $properties;
     }
 
     /**
@@ -36,10 +35,7 @@ class UpdateAPIProperties implements ShouldQueue
      */
     public function handle()
     {
-        $propertyUuids = Property::query()->distinct()->pluck('property_uuid')->toArray();
-        $newProperties = $this->properties->whereNotIn('uuid', $propertyUuids)->all();
-
-        foreach ($newProperties as $newProperty) {
+        foreach ($this->newProperties as $newProperty) {
             $property = new Property();
 
             $property->property_uuid = $newProperty['uuid'];

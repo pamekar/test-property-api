@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Property;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -40,11 +41,14 @@ class UpdateAPIProperties extends Command
     {
         $url = 'https://trialapi.craig.mtcdevserver.com/api/properties?api_key='.config('property.api_key')
             .'&page[number]=1&page[size]=100';
+
+        $propertyUuids = Property::query()->distinct()->pluck('property_uuid')->toArray();
         for ($i = 0; true; $i++) {
             $response = Http::get($url);
             $properties = collect($response->json());
+            $newProperties = collect($response->json()['data'])->whereNotIn('uuid', $propertyUuids)->all();
 
-            \App\Jobs\UpdateAPIProperties::dispatch(collect($response->json()['data']));
+            \App\Jobs\UpdateAPIProperties::dispatch($newProperties);
             $url = $properties['next_page_url'] ?: null;
 
             if ($url === null) {
