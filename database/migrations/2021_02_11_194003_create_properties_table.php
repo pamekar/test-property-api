@@ -15,7 +15,7 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("api_property_type_id")->nullable();
+            $table->string("property_uuid")->nullable();
             $table->string("county", 191);
             $table->string("country", 191);
             $table->string("town", 191);
