@@ -33,7 +33,7 @@ class CreatePropertiesTable extends Migration
             $table->timestamps();
 
             $table->foreign('property_type_id')->references('id')->on('property_types');
-            $table->index(['county', 'country', 'town', 'type']);
+            $table->index(['address', 'price', 'num_bedrooms', 'type']);
 
         });
     }
