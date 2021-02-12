@@ -21,7 +21,7 @@ class CreatePropertiesTable extends Migration
             $table->string("country", 191);
             $table->string("town", 191);
             $table->text("description");
-            $table->text("address");
+            $table->string("address", 191);
             $table->text("image_full");
             $table->text("image_thumbnail");
             $table->text("latitude");
