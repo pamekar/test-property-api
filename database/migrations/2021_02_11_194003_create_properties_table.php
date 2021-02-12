@@ -15,6 +15,7 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("property_type_id");
             $table->string("property_uuid")->nullable();
             $table->string("county", 191);
             $table->string("country", 191);
@@ -29,9 +30,9 @@ class CreatePropertiesTable extends Migration
             $table->integer("num_bathrooms");
             $table->integer("price");
             $table->enum("type", ['rent', 'sale']);
-            $table->json("property_type")->nullable();
             $table->timestamps();
 
+            $table->foreign('property_type_id')->references('id')->on('property_types');
             $table->index(['county', 'country', 'town', 'type']);
 
         });

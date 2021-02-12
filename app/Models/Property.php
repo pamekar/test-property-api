@@ -9,8 +9,8 @@ class Property extends Model
 {
     use HasFactory;
 
-    public function getPropertyTypeAttribute($value)
+    public function propertyType()
     {
-        return json_decode($value, false);
+        return $this->belongsTo(PropertyType::class);
     }
 }
