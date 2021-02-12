@@ -128,10 +128,16 @@ class PropertiesController extends Controller
      *
      * @param  int  $id
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        Validator::validate(['id' => $id], [
+            'id' => 'exists:properties'
+        ]);
+        $property = Property::query()->find($id);
+        $property->delete();
+
+        return redirect()->back()->with(['success' => "Property Deleted"]);
     }
 }
