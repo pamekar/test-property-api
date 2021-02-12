@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Property;
+use App\Models\PropertyType;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -38,7 +39,11 @@ class UpdateAPIProperties implements ShouldQueue
         foreach ($this->newProperties as $newProperty) {
             $property = new Property();
 
+            $propertyType = PropertyType::firstOrCreate(['title' => $newProperty['property_type']['title']],
+                ['description' => $newProperty['property_type']['description']]);
+
             $property->property_uuid = $newProperty['uuid'];
+            $property->property_type_id = $propertyType->id;
             $property->county = $newProperty['county'];
             $property->country = $newProperty['country'];
             $property->town = $newProperty['town'];
@@ -52,10 +57,8 @@ class UpdateAPIProperties implements ShouldQueue
             $property->num_bathrooms = $newProperty['num_bathrooms'];
             $property->price = $newProperty['price'];
             $property->type = $newProperty['type'];
-            $property->property_type = json_encode($newProperty['property_type']);
 
             $property->save();
-
         }
     }
 }
