@@ -18,4 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('properties/search', [PropertiesController::class, 'search'])->name('properties.search');
+
 Route::resource('properties', PropertiesController::class);
