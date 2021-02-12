@@ -11,5 +11,6 @@ return [
     |
     */
 
-    'api_key' => env('PROPERTY_API_KEY'),
+    'api_key'      => env('PROPERTY_API_KEY'),
+    'api_endpoint' => env('PROPERTY_API_ENDPOINT'),
 ];

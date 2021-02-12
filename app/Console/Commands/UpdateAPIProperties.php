@@ -39,7 +39,7 @@ class UpdateAPIProperties extends Command
      */
     public function handle()
     {
-        $url = 'https://trialapi.craig.mtcdevserver.com/api/properties?api_key='.config('property.api_key')
+        $url = config('property.api_endpoint').'?api_key='.config('property.api_key')
             .'&page[number]=1&page[size]=100';
 
         $propertyUuids = Property::query()->distinct()->pluck('property_uuid')->toArray();
