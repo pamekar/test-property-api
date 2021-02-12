@@ -1,6 +1,27 @@
 @extends('layouts.app')
 @section('content')
+    <form action="{{route('properties.search')}}" method="get" class="pb-4">
+        @csrf
+        <div class="form-group">
+            <label for="fields">Fields</label>
+            <select class="form-control" id="fields" name="field" required>
+                <option disabled selected>Select Field</option>
+                <option value="address" {{request('field')==='address'?'selected':null}}>Address</option>
+                <option value="num_bedrooms"{{request('field')==='num_bedrooms'?'selected':null}}>Number of Bedrooms
+                </option>
+                <option value="price" {{request('field')==='price'?'selected':null}}>Price</option>
+                <option value="property_type" {{request('field')==='property_type'?'selected':null}}>Property Type
+                </option>
+                <option value="type" {{request('field')==='type'?'selected':null}}>For Sale / For Rent</option>
 
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="search">Search</label>
+            <input class="form-control" id="search" name="search" value="{{request('search')}}" required>
+        </div>
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+    </form>
     <table class="table">
         <thead>
         <tr>
@@ -17,8 +38,8 @@
             <th>Num Bathrooms</th>
             <th>Price</th>
             <th>Type</th>
-            <th>Property Type
-            <th>
+            <th>Property Type</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -34,13 +55,24 @@
                 <td>{{ $property->latitude }}</td>
                 <td>{{ $property->longitude }}</td>
                 <td>{{ $property->num_bedrooms }}</td>
-                <td>{{ $property->price }}</td>
+                <td>{{ $property->num_bathrooms }}</td>
+                <td>{{ $property->price/100 }}</td>
                 <td>{{ $property->type }}</td>
-                <td>{{ $property->type }}</td>
-                <td>{{ $property->property_type->title }}</td>
+                <td>{{ $property->propertyType->title }}</td>
+                <td>
+                    <form action="{{route('properties.destroy',['property'=>$property->id])}}" method="post">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-outline-danger"><span class="iconify"
+                                                                                   data-icon="simple-line-icons:close"
+                                                                                   data-inline="false"></span>
+                        </button>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>
     </table>
     {{$properties->onEachSide(5)->links()}}
 @endsection
+
