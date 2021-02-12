@@ -24,7 +24,7 @@
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
@@ -52,7 +52,7 @@
         </div>
     </nav>
 
-    <main class="container py-4">
+    <main class="container-fluid py-4">
         @if(session()->has('success'))
             <div class="alert alert-success">
                 <p>{{session()->get('success')}}</p>
