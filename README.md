@@ -6,7 +6,7 @@ This application revolves around gathering data from a 3rd party service and bui
 ### Installation
 - Run command in bash terminal 
 ```bash
-git clone https://github.com/pamekar/pworks.git && cd pworks
+git clone https://github.com/pamekar/test-property-api.git && cd test-property-api
 ```
 - Install required packages with
 ```bash
