@@ -34,32 +34,12 @@ class PropertiesController extends Controller
      */
     public function search(Request $request)
     {
-        $request->validate([
-            'search' => 'required|string|max:255',
-            'field'  => 'required|in:address,num_bedrooms,price,property_type,type'
-        ]);
         $query = Property::query();
-
-        $search = $request->get('search');
+        $term = $request->get('term');
         $field = $request->get('field');
-        switch ($field) {
-            case 'address':
-                $query->where('address', 'like', "%{$search}%");
-                break;
-            case 'property_type':
-                $propertyTypes = PropertyType::query()->where('title', 'like', "%{$search}%")
-                    ->pluck('id')->toArray();
-                $query->whereIn('id', $propertyTypes);
-                break;
-            case 'num_bedrooms':
-            case 'price':
-            case 'type':
-                $query->where($field, $search);
-                break;
-        }
 
-        $properties = $query->paginate(15);
-        $properties->withPath("/properties/search?field={$field}&search={$search}");
+        $properties = $query->search($term, $field)->paginate(15);
+        $properties->withPath("/properties/search?field={$field}&term={$term}");
 
         return view('properties.index', compact('properties'));
     }
