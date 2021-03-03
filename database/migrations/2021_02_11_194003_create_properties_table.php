@@ -26,8 +26,8 @@ class CreatePropertiesTable extends Migration
             $table->text("image_thumbnail");
             $table->text("latitude");
             $table->text("longitude");
-            $table->integer("num_bedrooms");
-            $table->integer("num_bathrooms");
+            $table->unsignedInteger("num_bedrooms");
+            $table->unsignedInteger("num_bathrooms");
             $table->integer("price");
             $table->enum("type", ['rent', 'sale']);
             $table->timestamps();
