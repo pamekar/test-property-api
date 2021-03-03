@@ -39,11 +39,11 @@ class UpdateAPIProperties extends Command
      */
     public function handle()
     {
-        $url = config('property.api_endpoint').'?api_key='.config('property.api_key')
-            .'&page[number]=1&page[size]=100';
+        $url = config('property.api_endpoint') . '?api_key=' . config('property.api_key')
+            . '&page[number]=1&page[size]=100';
 
         $propertyUuids = Property::query()->distinct()->pluck('property_uuid')->toArray();
-        for ($i = 0; true; $i++) {
+        while (true) {
             $response = Http::get($url);
             $properties = collect($response->json());
             $newProperties = collect($response->json()['data'])->whereNotIn('uuid', $propertyUuids)->all();
