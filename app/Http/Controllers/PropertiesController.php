@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchPropertiesRequest;
 use App\Models\Property;
 use App\Models\PropertyType;
 use Illuminate\Contracts\Foundation\Application;
@@ -28,11 +29,11 @@ class PropertiesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request  $request
+     * @param SearchPropertiesRequest $request
      *
      * @return Application|Factory|View
      */
-    public function search(Request $request)
+    public function search(SearchPropertiesRequest $request)
     {
         $query = Property::query();
         $term = $request->get('term');
