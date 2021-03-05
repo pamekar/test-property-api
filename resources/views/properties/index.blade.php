@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <form action="{{route('properties.search')}}" method="get" class="pb-4">
-        @csrf
         <div class="form-group">
             <label for="fields">Fields</label>
             <select class="form-control" id="fields" name="field" required>
@@ -17,10 +16,10 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="search">Search</label>
-            <input class="form-control" id="search" name="search" value="{{request('search')}}" required>
+            <label for="term">Term</label>
+            <input class="form-control" id="term" name="term" value="{{request('term')}}" required>
         </div>
-        <button type="submit" class="btn btn-outline-secondary">Search</button>
+        <button type="submit" class="btn btn-outline-secondary">Term</button>
     </form>
     <table class="table">
         <thead>
@@ -60,14 +59,24 @@
                 <td>{{ $property->type }}</td>
                 <td>{{ $property->propertyType->title }}</td>
                 <td>
-                    <form action="{{route('properties.destroy',['property'=>$property->id])}}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-outline-danger"><span class="iconify"
-                                                                                   data-icon="simple-line-icons:close"
-                                                                                   data-inline="false"></span>
-                        </button>
-                    </form>
+                    <div class="btn-group">
+
+                        <a class="btn btn-sm btn-outline-primary mx-1"
+                           href="{{route('properties.show',['property'=>$property->id])}}">
+                            <span class="iconify" data-icon="simple-line-icons:eye" data-inline="false"></span>
+                        </a>
+                        <a class="btn btn-sm btn-outline-secondary mx-1"
+                           href="{{route('properties.edit',['property'=>$property->id])}}">
+                            <span class="iconify" data-icon="simple-line-icons:note" data-inline="false"></span>
+                        </a>
+                        <form action="{{route('properties.destroy',['property'=>$property->id])}}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-outline-danger mx-1">
+                                <span class="iconify" data-icon="simple-line-icons:close" data-inline="false"></span>
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @endforeach
