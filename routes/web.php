@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PropertiesController;
+use App\Models\Property;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $properties = Property::query()->paginate(15);
+
+    return view('properties.index', compact('properties'));
 });
 
 Route::get('properties/search', [PropertiesController::class, 'search'])->name('properties.search');
