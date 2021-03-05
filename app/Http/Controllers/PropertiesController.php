@@ -52,62 +52,66 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        return view('properties.create');
+        $property = new Property();
+        return view('properties.form', compact('property'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return RedirectResponse
      */
     public function store(Request $request)
     {
+
+
         return redirect()->route('properties.index')->with();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function show($id)
     {
-        //
+        $property = Property::query()->findOrFail($id);
+        return view('properties.show', compact('property'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return Application|Factory|View
      */
     public function edit($id)
     {
-        return view('properties.edit');
+        $property = Property::query()->findOrFail($id)->with('propertyTypes');
+        return view('properties.show', compact('property'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      *
      * @return RedirectResponse
      */
