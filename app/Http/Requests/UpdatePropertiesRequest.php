@@ -13,7 +13,7 @@ class UpdatePropertiesRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,20 +23,22 @@ class UpdatePropertiesRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'county' => 'string',
-            'country' => 'string',
-            'town' => 'string',
-            'description' => 'string',
-            'address' => 'string',
-            'image_full' => 'string',
-            'image_thumbnail' => 'string',
-            'latitude' => 'string',
-            'longitude' => 'string',
-            'num_bedrooms' => 'string',
-            'num_bathrooms' => 'string',
-            'price' => 'string',
-            'type' => 'string'
+            'county'                    => 'string',
+            'country'                   => 'string',
+            'town'                      => 'string',
+            'description'               => 'string',
+            'address'                   => 'string',
+            'image'                     => 'file',
+            'latitude'                  => 'string',
+            'longitude'                 => 'string',
+            'num_bedrooms'              => 'integer',
+            'num_bathrooms'             => 'integer',
+            'price'                     => 'string',
+            'type'                      => 'string',
+            'property_type_title'       => 'string',
+            'property_type_description' => 'string'
         ];
     }
 }
