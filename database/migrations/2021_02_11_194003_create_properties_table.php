@@ -22,10 +22,10 @@ class CreatePropertiesTable extends Migration
             $table->string("town", 191);
             $table->text("description");
             $table->string("address", 191);
-            $table->text("image_full");
-            $table->text("image_thumbnail");
-            $table->text("latitude");
-            $table->text("longitude");
+            $table->text("image_full")->nullable();
+            $table->text("image_thumbnail")->nullable();
+            $table->text("latitude")->nullable();
+            $table->text("longitude")->nullable();
             $table->unsignedInteger("num_bedrooms");
             $table->unsignedInteger("num_bathrooms");
             $table->integer("price");
