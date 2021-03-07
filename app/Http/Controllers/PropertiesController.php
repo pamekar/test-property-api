@@ -33,7 +33,7 @@ class PropertiesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param SearchPropertiesRequest $request
+     * @param  SearchPropertiesRequest  $request
      *
      * @return Application|Factory|View
      */
@@ -63,7 +63,7 @@ class PropertiesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param  StorePropertiesRequest  $request
      *
      * @return RedirectResponse
      * @throws FileDoesNotExist
@@ -106,7 +106,7 @@ class PropertiesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      *
      * @return Application|Factory|View
      */
@@ -119,32 +119,91 @@ class PropertiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      *
      * @return Application|Factory|View
      */
     public function edit($id)
     {
-        $property = Property::query()->findOrFail($id)->with('propertyTypes');
-        return view('properties.show', compact('property'));
+        $property = Property::query()->findOrFail($id);
+
+        return view('properties.form', compact('property'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
+     * @param  Request  $request
+     * @param  int  $id
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePropertiesRequest $request, $id)
     {
+        $property = Property::query()->findOrFail($id);
+
+        // Find similar property, or create new one
+        if (($request->has('property_type_title') || $request->has('property_type_description'))
+            && $propertyType = $property->propertyType
+        ) {
+            $propertyType->title = $request->get('property_type_title') ?? $propertyType->title;
+            $propertyType->description = $request->get('property_type_description') ?? $propertyType->description;
+            $propertyType->save();
+        }
+
+        if ($request->has('county')) {
+            $property->county = $request->get('county');
+        }
+        if ($request->has('country')) {
+            $property->country = $request->get('country');
+        }
+        if ($request->has('town')) {
+            $property->town = $request->get('town');
+        }
+        if ($request->has('description')) {
+            $property->description = $request->get('description');
+        }
+        if ($request->has('address')) {
+            $property->address = $request->get('address');
+        }
+        if ($request->has('latitude')) {
+            $property->latitude = $request->get('latitude');
+        }
+        if ($request->has('longitude')) {
+            $property->longitude = $request->get('longitude');
+        }
+        if ($request->has('num_bedrooms')) {
+            $property->num_bedrooms = $request->get('num_bedrooms');
+        }
+        if ($request->has('num_bathrooms')) {
+            $property->num_bathrooms = $request->get('num_bathrooms');
+        }
+        if ($request->has('price')) {
+            $property->price = $request->get('price');
+        }
+        if ($request->has('type')) {
+            $property->type = $request->get('type');
+        }
+
+        if ($request->has('image')) // Store image file
+        {
+            $property->clearMediaCollection('default_images');
+            $property->addMedia($request->file('image'))->withResponsiveImages()->toMediaCollection('default_images');
+
+            $media = $property->getMedia('default_images')[0];
+            $property->image_full = $media->getUrl();
+            $property->image_thumbnail = collect($media->getResponsiveImageUrls())->last();
+        }
+
+        $property->save();
+
+        return redirect()->route('properties.index')->with(['success' => "Property updated"]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      *
      * @return RedirectResponse
      */
