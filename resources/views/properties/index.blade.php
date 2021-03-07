@@ -29,8 +29,7 @@
             <th>Town</th>
             <th>Description</th>
             <th>Address</th>
-            <th>Image Full</th>
-            <th>Image thumbnail</th>
+            <th>Image</th>
             <th>Latitude</th>
             <th>Longitude</th>
             <th>Num Bedrooms</th>
@@ -49,8 +48,7 @@
                 <td>{{ $property->town }}</td>
                 <td>{{ Str::limit($property->description,50) }}</td>
                 <td>{{ $property->address }}</td>
-                <td>{{ $property->image_full }}</td>
-                <td>{{ $property->image_thumbnail }}</td>
+                <td><img src="{{ $property->image_thumbnail }}" class="img-thumbnail" alt=""></td>
                 <td>{{ $property->latitude }}</td>
                 <td>{{ $property->longitude }}</td>
                 <td>{{ $property->num_bedrooms }}</td>
