@@ -75,6 +75,45 @@
             </tr>
             </tbody>
         </table>
+        <span
+            class="text-muted">Showing @{{ properties.from }} to @{{ properties.to }} of @{{ properties.total }} properties<br></span>
+        <div class="btn-group">
+            <button v-on:click="searchProperties(1)" class="btn btn-outline-primary" v-if="properties.current_page > 1">
+                <span class="iconify" data-icon="simple-line-icons:arrow-left" data-inline="false"></span> Previous
+            </button>
+
+            <button v-on:click="searchProperties(properties.current_page - 1)" class="btn btn-outline-primary"
+                    v-if="properties.current_page > 1">
+                <span class="iconify" data-icon="simple-line-icons:arrow-left" data-inline="false"></span> Previous
+            </button>
+            <button class="btn btn-outline-primary" v-else disabled>
+                <span class="iconify" data-icon="simple-line-icons:arrow-left" data-inline="false"></span> Previous
+            </button>
+
+            <button class="btn btn-primary" disabled>
+                @{{ properties.current_page }}
+            </button>
+
+            <button v-on:click="searchProperties(n + properties.current_page)" class="btn btn-outline-primary"
+                    v-for="n in paginationCount" v-if="(n + properties.current_page) < properties.last_page">@{{ n +
+                properties.current_page }}
+            </button>
+            <button class="btn btn-outline-primary" disabled>...</button>
+
+            <button v-on:click="searchProperties(properties.current_page + 1)" class="btn btn-outline-primary"
+                    v-if="properties.current_page < properties.last_page">
+                Next <span class="iconify" data-icon="simple-line-icons:arrow-right" data-inline="false"></span>
+            </button>
+            <button class="btn btn-outline-primary" v-else disabled>
+                Next <span class="iconify" data-icon="simple-line-icons:arrow-right" data-inline="false"></span>
+            </button>
+
+            <button v-on:click="searchProperties(properties.last_page)" class="btn btn-outline-primary"
+                    v-if="properties.current_page < properties.last_page">
+                <span class="iconify" data-icon="simple-line-icons:arrow-right" data-inline="false"></span><span
+                    class="iconify" data-icon="simple-line-icons:arrow-right" data-inline="false"></span>
+            </button>
+        </div>
     </div>
 @endsection
 @section('scripts')
