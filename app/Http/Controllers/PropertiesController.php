@@ -26,8 +26,9 @@ class PropertiesController extends Controller
     public function index()
     {
         $properties = Property::query()->paginate(15);
+        $data['properties'] = $properties;
 
-        return view('properties.index', compact('properties'));
+        return view('properties.index', compact('data'));
     }
 
     /**
@@ -45,8 +46,9 @@ class PropertiesController extends Controller
 
         $properties = $query->search($term, $field)->paginate(15);
         $properties->withPath("/properties/search?field={$field}&term={$term}");
+        $data['properties'] = $properties;
 
-        return view('properties.index', compact('properties'));
+        return view('properties.index', compact($data));
     }
 
     /**
