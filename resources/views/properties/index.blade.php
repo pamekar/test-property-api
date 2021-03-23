@@ -111,11 +111,11 @@
             <button v-on:click="searchProperties(properties.last_page)" class="btn btn-outline-primary"
                     v-if="properties.current_page < properties.last_page">
                 <span class="iconify" data-icon="simple-line-icons:arrow-right" data-inline="false"></span><span
-                    class="iconify" data-icon="simple-line-icons:arrow-right" data-inline="false"></span>
+                        class="iconify" data-icon="simple-line-icons:arrow-right" data-inline="false"></span>
             </button>
         </div>
     </div>
 @endsection
 @section('scripts')
-    <script src="{{asset('js/script.js')}}" type="text/javascript"></script>
+    <script src="{{public_asset("js/script.js")}}" type="text/javascript"></script>
 @endsection

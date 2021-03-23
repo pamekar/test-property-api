@@ -13,18 +13,19 @@
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>
-        let vmdata = @json($data);
-        vmdata.endpoint = "{{config('app.url')}}/api";
-        vmdata.field = "{{request('field')}}";
-        vmdata.term = "{{request('term')}}";
-    </script>
-    <!-- Fonts -->
+    @isset($data)
+        <script>
+            let vmdata = @json($data);
+            vmdata.endpoint = "{{config('app.url')}}/api";
+            vmdata.field = "{{request('field')}}";
+            vmdata.term = "{{request('term')}}";
+        </script>
+@endisset
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ public_asset("css/app.css") }}" rel="stylesheet">
 
 </head>
 <body>
