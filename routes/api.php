@@ -21,4 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('properties/search', [PropertiesController::class, 'search']);
 
-Route::resource('properties', PropertiesController::class);
+Route::resource('properties', PropertiesController::class)->only(['index', 'destroy']);
