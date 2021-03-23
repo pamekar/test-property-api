@@ -7,13 +7,13 @@ var vm = new Vue({
                 this.updateProperties(page)
             } else {
                 axios.get(`${this.endpoint}/properties/search?field=${this.field}&term=${this.term}&page=${page}&limit=15`).then(response => {
-                    this.properties = response.data.properties;
+                    this.properties.data = response.data.properties.data;
                 });
             }
         },
         updateProperties(page = 1) {
             axios.get(`${this.endpoint}/properties?page=${page}&limit=15`).then(response => {
-                this.properties = response.data.properties;
+                this.properties.data = response.data.properties.data;
             });
         },
         deleteProperty(id) {
