@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $properties = Property::query()->paginate(15);
+    $data['properties'] = $properties;
 
-    return view('properties.index', compact('properties'));
+    return view('properties.index', compact('data'));
 });
 
 Route::get('properties/search', [PropertiesController::class, 'search'])->name('properties.search');
